@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Product & Service — Chapter Tak Selesai</title>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Prata&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- STYLE -->
+    <link href="css/style.min.css" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        h1, h3, h4 { font-family: 'Prata', serif; }
+
+        /* search bar */
+        .search-bar {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto 25px auto;
+        }
+        .search-input {
+            width: 100%;
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #bbb;
+            padding: 10px 15px;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            transition: .3s;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+        }
+
+        .product-img {
+            width: 100%;
+            border-radius: 12px;
+            height: 230px;
+            object-fit: cover;
+        }
+
+        .price {
+            font-size: 17px;
+            font-weight: bold;
+            color: #5a381e;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: #5a381e;
+            color: white;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .filter-btn:hover { background: #3c2515; }
+        .filter-btn.active { background: #000; }
+
+        .hidden { display: none !important; }
+
+        /* modal */
+        .modal-bg {
+            position: fixed;
+            top: 0; left:0;
+            width:100%; height:100%;
+            background: rgba(0,0,0,0.6);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            padding:20px;
+            z-index:9999;
+        }
+        .modal-box {
+            width:100%;
+            max-width:500px;
+            background:#fff;
+            padding:25px;
+            border-radius:15px;
+            animation: fadeIn .3s ease;
+        }
+        @keyframes fadeIn {
+            from {opacity:0; transform: scale(.9);}
+            to {opacity:1; transform: scale(1);}
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="container-fluid p-0 nav-bar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+            <a href="index.html" class="navbar-brand px-lg-4 m-0">
+                <h1 class="brand-title text-white">CHAPTER TAK SELESAI</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto p-4">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="product.html" class="nav-item nav-link">Product & Service</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container py-5">
+
+        <h1 class="text-center mb-4">Our Product & Service</h1>
+
+        <!-- SEARCH BAR -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchMenu" placeholder="Cari menu...">
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <div class="text-center mb-4">
+            <button class="filter-btn active" onclick="filterCategory('all', event)">Semua</button>
+            <button class="filter-btn" onclick="filterCategory('coffee', event)">Coffee</button>
+            <button class="filter-btn" onclick="filterCategory('noncoffee', event)">Non-Coffee</button>
+            <button class="filter-btn" onclick="filterCategory('snack', event)">Snack</button>
+            <button class="filter-btn" onclick="filterCategory('beans', event)">Coffee Beans</button>
+        </div>
+
+        <div class="row" id="menuList">
+
+            <!-- DAFTAR MENU (12 ITEM) -->
+            <!-- Coffee -->
+            <div class="col-md-4 mb-4 menu-item coffee" data-name="americano kenangan" onclick="openModal('Americano Kenangan','americano.jpeg','Kopi hitam dengan karakter kuat dan aroma khas.','Rp 20.000')">
+                <div class="product-card">
+                    <img src="americano.jpeg" class="product-img">
+                    <h4>Americano Kenangan</h4>
+                    <p class="price">Rp 20.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item coffee" data-name="latte rindu" onclick="openModal('Latte Rindu','img/menu-2.jpg','Perpaduan espresso lembut dan susu creamy.','Rp 25.000')">
+                <div class="product-card">
+                    <img src="img/menu-2.jpg" class="product-img">
+                    <h4>Latte Rindu</h4>
+                    <p class="price">Rp 25.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item coffee" data-name="cappuccino sepi" onclick="openModal('Cappuccino Sepi','cappucino.jpeg','Coffee milk dengan foam tebal dan wangi khas.','Rp 23.000')">
+                <div class="product-card">
+                    <img src="cappucino.jpeg" class="product-img">
+                    <h4>Cappuccino Sepi</h4>
+                    <p class="price">Rp 23.000</p>
+                </div>
+            </div>
+
+              <div class="col-md-4 mb-4 menu-item coffee" data-name="cold brew patah hati" onclick="openModal('Cold Brew Patah Hati','coldbrew.jpeg','Kopi dingin dengan rasa halus dan rendah asam.','Rp 22.000')">
+                <div class="product-card">
+                    <img src="coldbrew.jpeg" class="product-img">
+                    <h4>Cold Brew Patah Hati</h4>
+                    <p class="price">Rp 22.000</p>
+                </div>
+            </div>
+
+              <div class="col-md-4 mb-4 menu-item coffee" data-name="affogato ingatan" onclick="openModal('Affogato Ingatan','affogato.jpeg','Perpaduan espresso panas dan es krim vanilla yang creame.','Rp 25.000')">
+                <div class="product-card">
+                    <img src="affogato.jpeg" class="product-img">
+                    <h4>Affogato Ingatan</h4>
+                    <p class="price">Rp 25.000</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4 menu-item coffee" data-name="butterscoth mantan favorit" onclick="openModal('Butterscoth Mantan Favorit','butter1.jpeg','Minuman manis dengan rasa caramel mentega yang lembut dan creame.','Rp 28.000')">
+                <div class="product-card">
+                    <img src="butter1.jpeg" class="product-img">
+                    <h4>Butterscoth Mantan Favorit</h4>
+                    <p class="price">Rp 28.000</p>
+                </div>
+            </div>
+
+            <!-- Non Coffee -->
+            <div class="col-md-4 mb-4 menu-item noncoffee" data-name="matcha yang pernah ada" onclick="openModal('Matcha Yang Pernah Ada','matcha.jpeg','Matcha premium dengan rasa earthy lembut.','Rp 28.000')">
+                <div class="product-card">
+                    <img src="matcha.jpeg" class="product-img">
+                    <h4>Matcha Yang Pernah Ada</h4>
+                    <p class="price">Rp 28.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item noncoffee" data-name="chocolatte rasa dulu" onclick="openModal('Chocolatte Rasa Dulu','chocolatte2.jpeg','Coklat creamy dengan tekstur lembut.','Rp 27.000')">
+                <div class="product-card">
+                    <img src="chocolatte2.jpeg" class="product-img">
+                    <h4>Chocolatte Rasa Dulu</h4>
+                    <p class="price">Rp 27.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item noncoffee" data-name="red velvet terakhir" onclick="openModal('Red Velvet Terakhir','red velvet.jpeg','Rasa manis lembut dengan aroma vanilla.','Rp 27.000')">
+                <div class="product-card">
+                    <img src="red velvet.jpeg" class="product-img">
+                    <h4>Red Velvet Terakhir</h4>
+                    <p class="price">Rp 27.000</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4 menu-item noncoffee" data-name="Mojito belum usai" onclick="openModal('Mojito Belum Usai','mojito.jpeg','Minuman segar dari perpaduan mint, jeruk nipis, dan soda dengan rasa asam manis yang menyegarkan.','Rp 23.000')">
+                <div class="product-card">
+                    <img src="mojito.jpeg" class="product-img">
+                    <h4>Mojito Belum Usai</h4>
+                    <p class="price">Rp 23.000</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4 menu-item noncoffee" data-name="lychee masih ada" onclick="openModal('Lychee Masih Ada','lychee.jpeg','Minuman segar dengan rasa manis dan aroma buah leci yang ringan.','Rp 22.000')">
+                <div class="product-card">
+                    <img src="lychee.jpeg" class="product-img">
+                    <h4>Lychee Masih Ada</h4>
+                    <p class="price">Rp 22.000</p>
+                </div>
+            </div>
+
+              <div class="col-md-4 mb-4 menu-item noncoffee" data-name="cookies & cream asing" onclick="openModal('Cookies & Cream Asing','cookies.jpeg','Perpaduan cream lembut dan remahan biskuit cokelat.','Rp 28.000')">
+                <div class="product-card">
+                    <img src="cookies.jpeg" class="product-img">
+                    <h4>Cookies & Cream Asing</h4>
+                    <p class="price">Rp 28.000</p>
+                </div>
+            </div>
+
+
+            <!-- Snack -->
+            <div class="col-md-4 mb-4 menu-item snack" data-name="banana pudding" onclick="openModal('Banana Pudding','banana puding.jpeg','Dessert creamy dengan perpaduan puding vanila dan pisang segar yang manis.','Rp 22.000')">
+                <div class="product-card">
+                    <img src="banana puding.jpeg" class="product-img">
+                    <h4>Banana Puding</h4>
+                    <p class="price">Rp 22.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item snack" data-name="banana bread" onclick="openModal('Banana Bread','banana bread.jpeg','Kue pisang lembut dengan rasa manis alami.','Rp 17.000')">
+                <div class="product-card">
+                    <img src="banana bread.jpeg" class="product-img">
+                    <h4>Banana Bread</h4>
+                    <p class="price">Rp 17.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item snack" data-name="french fries" onclick="openModal('French Fries','friend fries.jpeg','Kentang goreng renyah dengan bumbu gurih.','Rp 20.000')">
+                <div class="product-card">
+                    <img src="friend fries.jpeg" class="product-img">
+                    <h4>French Fries</h4>
+                    <p class="price">Rp 20.000</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4 menu-item snack" data-name="cheesecake" onclick="openModal('Cheesecake','chesse.jpeg','Dessert lembut dan creamy dengan rasa keju yang manis dan ringan.','Rp 20.000')">
+                <div class="product-card">
+                    <img src="chesse.jpeg" class="product-img">
+                    <h4>Cheesecake</h4>
+                    <p class="price">Rp 20.000</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4 menu-item snack" data-name="waffle" onclick="openModal('Waffle','waffle.jpeg','Cemilan renyah diluar dan lembut di dalam, disajikan dengan topping manis.','Rp 20.000')">
+                <div class="product-card">
+                    <img src="waffle.jpeg" class="product-img">
+                    <h4>Waffle</h4>
+                    <p class="price">Rp 20.000</p>
+                </div>
+            </div>
+
+             <div class="col-md-4 mb-4 menu-item snack" data-name="croissant" onclick="openModal('Croissant','croissant.jpeg','Pastry berlapis yang renyah diluar dan lembut di dalam dengan aroma mentega.','Rp 20.000')">
+                <div class="product-card">
+                    <img src="croissant.jpeg" class="product-img">
+                    <h4>Croissant</h4>
+                    <p class="price">Rp 20.000</p>
+                </div>
+            </div>
+
+
+            <!-- Beans -->
+            <div class="col-md-4 mb-4 menu-item beans" data-name="biji kopi" onclick="openModal('Biji Kopi 500gr','biji kopi.jpeg','Kopi biji pilihan dari dataran tinggi untuk penggemar kopi murni.','Rp 55.000')">
+                <div class="product-card">
+                    <img src="biji kopi.jpeg" class="product-img">
+                    <h4>Biji Kopi</h4>
+                    <p class="price">Rp 55.000</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 menu-item beans" data-name="bubuk kopi" onclick="openModal('bubuk kopi 500gr','bubuk kopi.jpeg','Rasa bold dan pahit khas robusta Indonesia.','Rp 45.000')">
+                <div class="product-card">
+                    <img src="bubuk kopi.jpeg" class="product-img">
+                    <h4>Bubuk Kopi</h4>
+                    <p class="price">Rp 45.000</p>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL POPUP -->
+    <div class="modal-bg" id="modalMenu">
+        <div class="modal-box">
+            <img id="modalImg" src="" style="width:100%; border-radius:10px; margin-bottom:15px;">
+            <h3 id="modalTitle"></h3>
+            <p id="modalDesc"></p>
+            <p class="price" id="modalPrice"></p>
+            <a id="modalOrder" href="#" class="btn-order" target="_blank">Pesan via WhatsApp</a>
+            <br><br>
+            <button onclick="closeModal()" class="filter-btn" style="background:#444;">Tutup</button>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        function filterCategory(category, e) {
+            const items = document.querySelectorAll('.menu-item');
+            const btns = document.querySelectorAll('.filter-btn');
+
+            btns.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            items.forEach(item => {
+                item.classList.remove('hidden');
+                if (category !== 'all' && !item.classList.contains(category)) {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        function openModal(title, img, desc, price) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalPrice').innerText = price;
+
+            let wpText = encodeURIComponent(`Halo, saya ingin memesan ${title}`);
+            document.getElementById('modalOrder').href = `https://wa.me/6281378117262?text=${wpText}`;
+
+            document.getElementById('modalMenu').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modalMenu').style.display = 'none';
+        }
+
+        // SEARCH FUNCTION
+        document.getElementById('searchMenu').addEventListener('keyup', function(){
+            let value = this.value.toLowerCase();
+            let items = document.querySelectorAll('.menu-item');
+
+            items.forEach(item => {
+                let name = item.getAttribute('data-name');
+                if (name.includes(value)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
